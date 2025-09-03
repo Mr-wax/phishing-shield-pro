@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Smart Phishing Detector",
+    "description": "The name of the extension"
+  },
+  "appDescription": {
+    "message": "Advanced AI-powered phishing email detection with real-time protection",
+    "description": "The description of the extension"
+  }
+}

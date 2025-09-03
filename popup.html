@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Detector</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="popup-container">
+        <div class="header">
+            <div class="logo">
+                <img src="icons/icon48.png" alt="Shield Icon">
+                <h1>Phishing Detector</h1>
+            </div>
+            <div class="status">
+                <div class="status-indicator" id="statusIndicator"></div>
+                <span id="statusText">Checking...</span>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📧</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="emailsScanned">0</span>
+                    <span class="stat-label">Emails Scanned</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="threatsDetected">0</span>
+                    <span class="stat-label">Threats Found</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button id="openDashboard" class="action-btn primary">
+                View Dashboard
+            </button>
+            <button id="scanNow" class="scan-button">
+                Start Scanning
+            </button>
+        </div>
+
+        <div class="settings">
+            <h3>Settings</h3>
+            <label>
+                <input type="checkbox" id="enableDetection" checked>
+                Enable phishing detection
+            </label>
+            <label>
+                <input type="checkbox" id="showDetails">
+                Show detection details
+            </label>
+        </div>
+
+        <div class="footer">
+            <p>Last updated: <span id="lastUpdated">Just now</span></p>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
