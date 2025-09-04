@@ -47,8 +47,9 @@ class PhishingDetectorDashboard {
         const settingsBtn = document.getElementById('settingsBtn');
 
         if (refreshBtn) {
-            refreshBtn.addEventListener('click', () => {
-                this.refreshData();
+            refreshBtn.addEventListener('click', async () => {
+                await this.resetStats();
+                await this.refreshData();
             });
         }
 
@@ -63,6 +64,17 @@ class PhishingDetectorDashboard {
         await this.loadData();
         this.renderDashboard();
         this.showNotification('Dashboard refreshed');
+    }
+
+    async resetStats() {
+        try {
+            const response = await chrome.runtime.sendMessage({ action: 'resetStats' });
+            if (response && response.success) {
+                this.stats = response.stats || this.stats;
+            }
+        } catch (error) {
+            console.error('Error resetting stats:', error);
+        }
     }
 
     renderDashboard() {

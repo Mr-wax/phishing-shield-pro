@@ -12,6 +12,9 @@ chrome.runtime.onInstalled.addListener(() => {
     loadStats();
 });
 
+// Also load stats when background starts
+loadStats();
+
 // Load stats from storage
 async function loadStats() {
     const data = await chrome.storage.sync.get('phishingStats');
@@ -40,7 +43,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 return true; // Indicates async response
                 
             case 'getStats':
-                sendResponse(stats);
+                // Ensure latest stats from storage before responding
+                (async () => {
+                    await loadStats();
+                    sendResponse(stats);
+                })();
+                return true;
                 break;
                 
             case 'blockEmail':
@@ -49,6 +57,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 
             case 'deleteEmail':
                 deleteEmail(request.emailId).then(sendResponse);
+                return true;
+            
+            case 'resetStats':
+                stats.totalScanned = 0;
+                stats.threatsDetected = 0;
+                stats.emailsDeleted = 0;
+                // Intentionally not resetting emailsBlocked unless specified
+                saveStats().then(() => sendResponse({ success: true, stats })).catch(error => sendResponse({ error: error.message }));
                 return true;
                 
             default:
